@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded10')</script>
+  <script>console.log('reloaded11')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -14,9 +14,6 @@
       <div class="mySlides fade">
         <div class="numbertext">1 / 3</div>
         <svg id="barchart1" class="chart" width="100%" height="70%">
-          <rect></rect>
-          <rect></rect>
-          <rect></rect>
         </svg>
         <div class="text">Caption Text</div>
       </div>
@@ -80,7 +77,8 @@
         console.log(positionInfo);
         var height = positionInfo.height;
         var width = positionInfo.width;
-        d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
+        var y = d3.scaleLinear().domain([0,20]).range(height,0);
+        d3.selectAll("rect").data(data).enter().append("rect").attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
       }
 
       barchart_display();
