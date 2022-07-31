@@ -1,7 +1,7 @@
 <html>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded31')</script>
+  <script>console.log('reloaded32')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -11,7 +11,7 @@
     <div class="slideshow-container">
 
       <!-- Full-width images with number and caption text -->
-      <div class="mySlides fade">
+      <div class="mySlides fade" onload="load_data()">
         <div class="numbertext">1 / 3</div>
         <svg id="barchart1" class="chart" width="100%" height="70%">
         </svg>
@@ -42,6 +42,11 @@
     </div>
 
     <script>
+
+      async function load_data(){
+        const fire_counts_data = await d3.csv('fire_counts.csv');
+      }
+
       let slideIndex = 1;
       showSlides(slideIndex);
 
@@ -88,6 +93,8 @@
 
         d3.select("#barchart1").selectAll("rect").data(data).enter().append("rect").attr("width",(width-2*margin)/3).attr("height",function(d) {return y(20-d);}).attr("x", function(d,i) {return margin+((width-2*margin)/3*i);}).attr("y", function(d) {return (height-margin)-y(20-d);});
       }
+
+      console.log(fire_counts_data);
 
       barchart_display();
 
