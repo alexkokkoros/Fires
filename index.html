@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded71')</script>
+  <script>console.log('reloaded72')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -103,7 +103,9 @@
 
           //rebuild lineplot on click into slide 1
           if (slideIndex==1){
-            var fire_counts_data =  d3.csv('fire_counts.csv').then(console.log(fire_counts_data)).then(load_lineplot(fire_counts_data));
+            var fire_counts_data =  d3.csv('fire_counts.csv',function(d) {return {year: +d.year, state: +d.state, count: +d.count};})
+            .then(console.log(fire_counts_data)).then(load_lineplot(fire_counts_data));
+
 
 
             //reload lineplot on window resize
