@@ -232,7 +232,7 @@
         d3.select("#lineplot1").selectAll('path').remove();
 
         var fire_counts_data = d3.csv('fire_counts.csv')
-        .then(conole.log(fire_counts_data))
+        .then(console.log(fire_counts_data))
         .then(lineplot_display())
         .catch(function(){console.log('error loading file');});
         
