@@ -4,11 +4,11 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded59')</script>
+  <script>console.log('reloaded60')</script>
 
   <!-- Load Fire Data -->
-  <body onload="load_data()">
-    
+  <!-- body onload="load_data()" -->
+  <body>
     <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
@@ -57,10 +57,12 @@
     <script>
 
       //Load Fire Data
-      async function load_data(){
-        var fire_counts_data = await d3.csv('fire_counts.csv');
-        console.log(fire_counts_data);
-      }
+      //async function load_data(){
+      //  var fire_counts_data = await d3.csv('fire_counts.csv');
+      //  console.log(fire_counts_data);
+      //}
+      var fire_counts_data = d3.csv('fire_counts.csv');
+      console.log(fire_count_data);
 
       //Start Slides at 1
       let slideIndex = 1;
