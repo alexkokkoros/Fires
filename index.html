@@ -1,13 +1,11 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded3')</script>
+  <script>console.log('reloaded4')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
-    <p> A Narrative Visualization of Historical Fire Data in the United States </p>        
-    <script>console.log(Math.PI)</script>
-
+    <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
 
     <!-- Slideshow container -->
     <div class="slideshow-container">
@@ -79,7 +77,11 @@
       var data = [4,8,15];
       var positionInfo = document.getElementById('barchart1');
       console.log(positionInfo);
-      d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return 100-10*d;});
+      var height = positionInfo.height;
+      console.log(height);
+      var width = positionInfo.width;
+      console.log(width);
+      d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
     </script>
   </body>
 </html>
