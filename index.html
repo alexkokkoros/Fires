@@ -1,8 +1,8 @@
 <html>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded33')</script>
-  <body>
+  <script>console.log('reloaded34')</script>
+  <body onload="load_data()">
     
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
@@ -11,7 +11,7 @@
     <div class="slideshow-container">
 
       <!-- Full-width images with number and caption text -->
-      <div class="mySlides fade" onload="load_data()">
+      <div class="mySlides fade" >
         <div class="numbertext">1 / 3</div>
         <svg id="barchart1" class="chart" width="100%" height="70%">
         </svg>
