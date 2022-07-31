@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded46')</script>
+  <script>console.log('reloaded47')</script>
 
   <!-- Load Fire Data -->
   <body onload="load_data()">
@@ -73,6 +73,7 @@
 
       // current slide
       function currentSlide(n) {
+        window.removeEventListener('resize',load_barchart());
         showSlides(slideIndex = n);
       }
 
@@ -99,11 +100,7 @@
 
 
           //reload barchart on window resize
-          window.addEventListener('resize',function(event){
-            d3.select("#barchart1").selectAll('g').remove();
-            d3.select("#barchart1").selectAll("rect").remove();
-            barchart_display();
-          })
+          window.addEventListener('resize',load_barchart());
         }
         //delete bars on click out of slide 1
         else {
@@ -164,9 +161,13 @@
       
 
       //show barchart
-      barchart_display();
+      function load_barchart(){
+        d3.select("#barchart1").selectAll('g').remove();
+        d3.select("#barchart1").selectAll("rect").remove();
+        barchart_display();
+      }
 
-
+      
 
     </script>
   </body>
