@@ -76,14 +76,14 @@
       }
     </script>
 
-      <script>
-        var data = [4,8,15];
-        var positionInfo = document.getElementById('barchart1');
-        console.log(positionInfo)
-        var height = positionInfo.height;
-        var width = positionInfo.width;
-        document.getElementById("data").innerHTML = data;
-        d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-10*d;});
-      </script>
+    <script>
+      var data = [4,8,15];
+      var positionInfo = document.getElementById('barchart1');
+      console.log(positionInfo)
+      var height = positionInfo.height;
+      var width = positionInfo.width;
+      document.getElementById("data").innerHTML = data;
+      d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-10*d;});
+    </script>
   </body>
 </html>
