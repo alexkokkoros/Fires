@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded81')</script>
+  <script>console.log('reloaded82')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -196,13 +196,16 @@
           //console.log(state_by_year);
 
           //set x and y scales to w/i the axes containers
-          var format = d3.time.format('%Y');
+
+          var minYear = d3.min(globalThis.fire_counts_data, d => d.year).getFullYear();
+          var maxYear = d3.max(globalThis.fire_counts_data, d => d.year).getFullYear();
+
 
           var y = d3.scaleLinear()
           .domain([0,20000])
           .range([height-2*margin,0]);
           var x = d3.scaleLinear()
-          .domain([format(new Date(1992)),format(new Date(2015))])
+          .domain([minYear,maxYear])
           .range([0,width-2*margin]);
 
           //set tooltip variable
