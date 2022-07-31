@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded80')</script>
+  <script>console.log('reloaded81')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -197,10 +197,10 @@
 
           //set x and y scales to w/i the axes containers
           var y = d3.scaleLinear()
-          .domain(d3.extent(globalThis.fire_counts_data,function(d) {return d.count;}))
+          .domain([0,20000])
           .range([height-2*margin,0]);
           var x = d3.scaleLinear()
-          .domain(d3.extent(globalThis.fire_counts_data, function(d) {return d.year;}))
+          .domain([1992,2015])
           .range([0,width-2*margin]);
 
           //set tooltip variable
