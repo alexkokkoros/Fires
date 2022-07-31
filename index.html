@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded63')</script>
+  <script>console.log('reloaded64')</script>
 
   <!-- Load Fire Data -->
   <!-- body onload="load_data()" -->
@@ -188,7 +188,7 @@
         console.log(globalThis.fire_counts_data);
 
         //group the data to draw one line by group
-        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(fire_counts_data);
+        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
         console.log(state_by_year);
 
         //set x and y scales to w/i the axes containers
