@@ -4,10 +4,10 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded56')</script>
+  <script>console.log('reloaded57')</script>
 
   <!-- Load Fire Data -->
-  <body onload="load_data">
+  <body onload="load_data()">
     
     <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
@@ -58,7 +58,7 @@
 
       //Load Fire Data
       async function load_data(){
-        const fire_counts_data = await d3.csv('fire_counts.csv');
+        var fire_counts_data = await d3.csv('fire_counts.csv');
         console.log(fire_counts_data);
       }
 
@@ -189,7 +189,7 @@
         var width = positionInfo.width;
 
         //group the data to draw one line by group
-        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
+        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(fire_counts_data);
         console.log(state_by_year)
 
         //set x and y scales to w/i the axes containers
