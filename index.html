@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded40')</script>
+  <script>console.log('reloaded41')</script>
   <body onload="load_data()">
     
     <h1>Historical Fires in The United States</h1>
@@ -102,8 +102,11 @@
         .enter()
         .append("rect")
         .attr("width",(width-2*margin)/3)
-        .attr("height",function(d) {return y(20-d);})
+        .attr("height",function(d) {return 20;})
         .attr("x", function(d,i) {return margin+((width-2*margin)/3*i);})
+        .attr("y", function(d) {return (height-margin)-20;})
+        .transition().duration(3000)
+        .attr("height",function(d) {return y(20-d);})
         .attr("y", function(d) {return (height-margin)-y(20-d);})
         .on('mouseover', function(d,i) {
           tooltip.style('opacity',1)
