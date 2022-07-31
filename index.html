@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded5')</script>
+  <script>console.log('reloaded6')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -73,6 +73,14 @@
         slides[slideIndex-1].style.display = "block";
         dots[slideIndex-1].className += " active";
       }
+
+      function updateWindow(){
+        x = w.innerWidth || e.clientWidth || g.clientWidth;
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
+        svg.attr('width',x).attr('height',y);
+      }
+
+      d3.select(window).on('resize.updatesvg',updateWindow)
 
       var data = [4,8,15];
       var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
