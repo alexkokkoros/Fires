@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded2')</script>
+  <script>console.log('reloaded3')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -79,7 +79,6 @@
       var data = [4,8,15];
       var positionInfo = document.getElementById('barchart1');
       console.log(positionInfo);
-      document.getElementById("data").innerHTML = data;
       d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return 100-10*d;});
     </script>
   </body>
