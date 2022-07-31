@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded32')</script>
+  <script>console.log('reloaded33')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -45,6 +45,7 @@
 
       async function load_data(){
         const fire_counts_data = await d3.csv('fire_counts.csv');
+        console.log(fire_counts_data);
       }
 
       let slideIndex = 1;
@@ -94,7 +95,7 @@
         d3.select("#barchart1").selectAll("rect").data(data).enter().append("rect").attr("width",(width-2*margin)/3).attr("height",function(d) {return y(20-d);}).attr("x", function(d,i) {return margin+((width-2*margin)/3*i);}).attr("y", function(d) {return (height-margin)-y(20-d);});
       }
 
-      console.log(fire_counts_data);
+      
 
       barchart_display();
 
