@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded6')</script>
+  <script>console.log('reloaded7')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -74,22 +74,22 @@
         dots[slideIndex-1].className += " active";
       }
 
-      function updateWindow(){
-        x = w.innerWidth || e.clientWidth || g.clientWidth;
-        y = w.innerHeight || e.clientHeight || g.clientHeight;
-        svg.attr('width',x).attr('height',y);
+      function barchart_display(){
+        var data = [5,8,15];
+        var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
+        console.log(positionInfo);
+        var height = positionInfo.height;
+        var width = positionInfo.width;
+        d3.select('svg').remove();
+        d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
       }
 
-      d3.select(window).on('resize.updatesvg',updateWindow)
+      barchart_display();
 
-      var data = [4,8,15];
-      var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
-      console.log(positionInfo);
-      var height = positionInfo.height;
-      console.log(height);
-      var width = positionInfo.width;
-      console.log(width);
-      d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
+      window.addEventListener('resize',function(event){
+        barchart_display;
+      })
+
     </script>
   </body>
 </html>
