@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded90')</script>
+  <script>console.log('reloaded91')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -215,10 +215,10 @@
           d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
           //color palette
-          //var res = state_by_year.map(function (d) {return d.state}) //list of state names
-          //var color = d3.scaleOrdinal()
-          //.domain(res)
-          //.range([#808080,])
+          var res = state_by_year.map(function (d) {return d.state}) //list of state names
+          var color = d3.scaleOrdinal()
+          .domain(res)
+          .range(["#808080","#065535","#ffc0cb","#ffa500","#008080","#40e0d0","#800000","#800080","#333333","#66cdaa"])
 
 
           //join lines and data
@@ -228,8 +228,7 @@
           .enter()
           .append("path")
           .attr('fill','none')
-          //.attr('stroke', function(d) {return color(d.state)})
-          .attr('stroke','black')
+          .attr('stroke', function(d) {return color(d.state)})
           .attr("stroke-width",1.5)
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
