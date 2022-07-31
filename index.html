@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded72')</script>
+  <script>console.log('reloaded73')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -103,10 +103,7 @@
 
           //rebuild lineplot on click into slide 1
           if (slideIndex==1){
-            var fire_counts_data =  d3.csv('fire_counts.csv',function(d) {return {year: +d.year, state: +d.state, count: +d.count};})
-            .then(console.log(fire_counts_data)).then(load_lineplot(fire_counts_data));
-
-
+            d3.csv('fire_counts.csv',function(data){console.log(data);});
 
             //reload lineplot on window resize
             window.addEventListener('resize',load_lineplot);
@@ -178,7 +175,7 @@
         }
 
         //show the lineplot
-        function lineplot_display(data){
+        function lineplot_display(){
           var margin = 50;
 
           //get size of svg canvas
@@ -190,16 +187,16 @@
           console.log(data);
 
           //group the data to draw one line by group
-          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(data);
-          console.log(state_by_year);
+          //var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(data);
+          //console.log(state_by_year);
 
           //set x and y scales to w/i the axes containers
-          var y = d3.scaleLinear()
-          .domain(d3.extent(fire_counts_data,function(d) {return d.count;}))
-          .range([height-2*margin,0]);
-          var x = d3.scaleLinear()
-          .domain(d3.extent(fire_counts_data, function(d) {return d.year;}))
-          .range([0,width-2*margin]);
+          //var y = d3.scaleLinear()
+          //.domain(d3.extent(fire_counts_data,function(d) {return d.count;}))
+          //.range([height-2*margin,0]);
+          //var x = d3.scaleLinear()
+          //.domain(d3.extent(fire_counts_data, function(d) {return d.year;}))
+          //.range([0,width-2*margin]);
 
           //set tooltip variable
           var tooltip = d3.select("#tooltip")
@@ -209,32 +206,32 @@
           d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
           //color palette
-          var res = state_by_year.map(function (d) {return d.state}) //list of state names
-          var color = d3.scaleOrdinal()
-          .domain(res)
-          .range()
+          //var res = state_by_year.map(function (d) {return d.state}) //list of state names
+          //var color = d3.scaleOrdinal()
+          //.domain(res)
+          //.range()
 
 
           //join lines and data
-          var lplot = d3.select("#lineplot1")
-          .selectAll(".line")
-          .data(state_by_year)
-          .enter()
-          .append("path")
-          .attr('fill','none')
-          .attr('stroke', function(d) {return color(d.state)})
-          .attr("stroke-width",1.5)
-          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
+          //var lplot = d3.select("#lineplot1")
+          //.selectAll(".line")
+          //.data(state_by_year)
+          //.enter()
+          //.append("path")
+          //.attr('fill','none')
+          //.attr('stroke', function(d) {return color(d.state)})
+          //.attr("stroke-width",1.5)
+          //.attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
         }
 
         //show barchart
-        function load_lineplot(data){
+        function load_lineplot(){
           d3.select("#lineplot1").selectAll('g').remove();
           d3.select("#lineplot1").selectAll(".line").remove();
           d3.select("#lineplot1").selectAll('path').remove();
 
 
-          lineplot_display(data);
+          lineplot_display();
         }
 
       
