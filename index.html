@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded14')</script>
+  <script>console.log('reloaded15')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -86,7 +86,7 @@
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+(height+margin)+')').call(d3.axisBottom(x));
 
-        d3.select("#barchart1").append('g').attr('transform','translate('+margin+','+(height+margin)+')').selectAll("rect").data(data).enter().append("rect").attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
+        d3.select("#barchart1").selectAll("rect").data(data).enter().append("rect").attr("width",25).attr("height",function(d) {return 20*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-20*d;});
       }
 
       barchart_display();
