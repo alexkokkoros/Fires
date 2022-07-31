@@ -4,10 +4,10 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded74')</script>
+  <script>console.log('reloaded75')</script>
 
   <!-- Load Fire Data -->
-  <body>
+  <body onload="load_data()">
     <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
@@ -54,6 +54,11 @@
     <div id="tooltip" opacity=0></div>
 
     <script>
+
+      async function load_data(){
+        var fire_counts_data = await d3.csv('fire_counts.csv');
+        console.log(fire_counts_data);
+      }
 
         
 
@@ -103,9 +108,7 @@
 
           //rebuild lineplot on click into slide 1
           if (slideIndex==1){
-            var fire_counts_data = d3.csv('fire_counts.csv');
-            console.log(fire_counts_data);
-
+            load_lineplot();
             //reload lineplot on window resize
             window.addEventListener('resize',load_lineplot);
           }
