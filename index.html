@@ -1,16 +1,24 @@
 <html>
+  <!-- Load Libraries -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded43')</script>
+
+  <!-- Build Tracker -->
+  <script>console.log('reloaded44')</script>
+
+  <!-- Load Fire Data -->
   <body onload="load_data()">
     
+    <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
 
     <!-- Slideshow container -->
     <div class="slideshow-container">
 
-      <!-- Full-width images with number and caption text -->
+      <!-- Slides -->
+
+      <!-- Slide 1 -->
       <div class="mySlides fade" >
         <div class="numbertext">1 / 3</div>
         <svg id="barchart1" class="chart" width="100%" height="70%">
@@ -18,12 +26,14 @@
         <div class="text">Caption Text</div>
       </div>
 
+      <!-- Slide 2 -->
       <div class="mySlides fade">
         <div class="numbertext">2 / 3</div>
         <img src="fire2.jpeg" style="width:100%;height:70%">
         <div class="text">Caption Two</div>
       </div>
 
+      <!-- Slide 3 -->
       <div class="mySlides fade">
         <div class="numbertext">3 / 3</div>
         <img src="fire3.jpeg" style="width:100%;height:70%">
@@ -34,22 +44,25 @@
       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
       <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
-    <!-- The dots/circles -->
+    <!-- The dots -->
     <div style="text-align:center">
       <span class="dot" onclick="currentSlide(1)"></span>
       <span class="dot" onclick="currentSlide(2)"></span>
       <span class="dot" onclick="currentSlide(3)"></span>
     </div>
 
+    <!-- Tooltip -->
     <div id="tooltip" opacity=0></div>
 
     <script>
 
+      //Load Fire Data
       async function load_data(){
         const fire_counts_data = await d3.csv('fire_counts.csv');
         console.log(fire_counts_data);
       }
 
+      //Start Slides at 1
       let slideIndex = 1;
       showSlides(slideIndex);
 
@@ -58,7 +71,7 @@
         showSlides(slideIndex += n);
       }
 
-      // Thumbnail image controls
+      // current slide
       function currentSlide(n) {
         showSlides(slideIndex = n);
       }
@@ -77,25 +90,37 @@
         }
         slides[slideIndex-1].style.display = "block";
         dots[slideIndex-1].className += " active";
+
+        if (n=1){
+          d3.select("#barchart1").selectAll('g').remove();
+          d3.select("#barchart1").selectAll("rect").remove();
+          barchart_display();
+        }
       }
 
+      //display the barchart
       function barchart_display(){
         var data = [5,8,15];
         var margin = 50;
 
+        //get size of svg canvas
         var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
         console.log(positionInfo);
         var height = positionInfo.height;
         var width = positionInfo.width;
 
+        //set x and y scales to w/i the axes containers
         var y = d3.scaleLinear().domain([0,20]).range([height-2*margin,0]);
         var x = d3.scaleBand().domain(['a','b','c']).range([0,width-2*margin]);
 
+        //set tooltip variable
         var tooltip = d3.select("#tooltip")
 
+        //show axes
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
+        //join rects and data
         var bchart = d3.select("#barchart1")
         .selectAll("rect")
         .data(data)
@@ -106,11 +131,13 @@
         .attr("x", function(d,i) {return margin+((width-2*margin)/3*i);})
         .attr("y", function(d) {return (height-margin)-20;});
 
+        //set up transition
         bchart.transition().duration(3000).delay(1000)
         .attr("height",function(d) {return y(20-d);})
         .attr("y", function(d) {return (height-margin)-y(20-d);});
 
 
+        //set up tooltip mouseover
         bchart.on('mouseover', function(d,i) {
           tooltip.style('opacity',1)
           .style('left',(d3.event.pageX)+'px')
@@ -122,8 +149,10 @@
 
       
 
+      //show barchart
       barchart_display();
 
+      //reload barchart on window resize
       window.addEventListener('resize',function(event){
         d3.select("#barchart1").selectAll('g').remove();
         d3.select("#barchart1").selectAll("rect").remove();
