@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded78')</script>
+  <script>console.log('reloaded80')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -187,19 +187,20 @@
           var positionInfo = document.getElementById('lineplot1').getBoundingClientRect();
           console.log(positionInfo);
           var height = positionInfo.height;
+          console.log(height)
           var width = positionInfo.width;
-
+          console.log(width)
 
           //group the data to draw one line by group
-          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
-          console.log(state_by_year);
+          //var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
+          //console.log(state_by_year);
 
           //set x and y scales to w/i the axes containers
           var y = d3.scaleLinear()
-          .domain(d3.extent(state_by_year,function(d) {return d.count;}))
+          .domain(d3.extent(globalThis.fire_counts_data,function(d) {return d.count;}))
           .range([height-2*margin,0]);
           var x = d3.scaleLinear()
-          .domain(d3.extent(state_by_year, function(d) {return d.year;}))
+          .domain(d3.extent(globalThis.fire_counts_data, function(d) {return d.year;}))
           .range([0,width-2*margin]);
 
           //set tooltip variable
@@ -217,15 +218,15 @@
 
 
           //join lines and data
-          var lplot = d3.select("#lineplot1")
-          .selectAll(".line")
-          .data(state_by_year)
-          .enter()
-          .append("path")
-          .attr('fill','none')
+          //var lplot = d3.select("#lineplot1")
+          //.selectAll(".line")
+          //.data(state_by_year)
+          //.enter()
+          //.append("path")
+          //.attr('fill','none')
           //.attr('stroke', function(d) {return color(d.state)})
-          .attr("stroke-width",1.5)
-          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
+          //.attr("stroke-width",1.5)
+          //.attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
         }
 
         //show barchart
