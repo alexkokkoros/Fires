@@ -237,8 +237,8 @@
           lplot.on('mouseover', function(d,i) {
           tooltip.style('opacity',1)
           .style('left',(d3.event.pageX)+'px')
-          style('top',(d3.event.pageY)+'px')
-          html('State '+d.state+' had '+d.count + ' fires in '+d.year);
+          .style('top',(d3.event.pageY)+'px')
+          .html('State '+d.state+' had '+d.count + ' fires in '+d.year);
           })
           .on('mouseout',function() {tooltip.style('opacity',0)});
         }
