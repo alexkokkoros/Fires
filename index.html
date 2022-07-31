@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded20')</script>
+  <script>console.log('reloaded21')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -80,8 +80,8 @@
         var height = positionInfo.height;
         var width = positionInfo.width;
 
-        var y = d3.scaleLinear().domain([0,20]).range([height-margin,margin]);
-        var x = d3.scaleBand().domain(['a','b','c']).range([margin,width-margin]);
+        var y = d3.scaleLinear().domain([0,20]).range([height+margin,0]);
+        var x = d3.scaleBand().domain(['a','b','c']).range([0,width+margin]);
 
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
         d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
