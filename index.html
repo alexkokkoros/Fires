@@ -1,7 +1,7 @@
 <html>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
-  <script>console.log('reloaded9')</script>
+  <script>console.log('reloaded10')</script>
   <body>
     
     <h1>Historical Fires in The United States</h1>
@@ -86,7 +86,6 @@
       barchart_display();
 
       window.addEventListener('resize',function(event){
-        d3.selectAll('rect').remove();
         barchart_display();
       })
 
