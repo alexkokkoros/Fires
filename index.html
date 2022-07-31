@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded88')</script>
+  <script>console.log('reloaded89')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -232,6 +232,15 @@
           .attr('stroke','black')
           .attr("stroke-width",1.5)
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
+
+          //set up tooltip mouseover
+          lplot.on('mouseover', function(d,i) {
+          tooltip.style('opacity',1)
+          .style('left',(d3.event.pageX)+'px')
+          style('top',(d3.event.pageY)+'px')
+          html('State '+d.state+' had '+d.count + ' fires in '+d.year);
+          })
+          .on('mouseout',function() {tooltip.style('opacity',0)});
         }
 
     </script>
