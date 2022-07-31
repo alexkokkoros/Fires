@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded82')</script>
+  <script>console.log('reloaded83')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -56,9 +56,12 @@
     <script>
 
       async function load_line_data(){
+        d3.select("#lineplot1").selectAll('g').remove();
+        d3.select("#lineplot1").selectAll(".line").remove();
+        d3.select("#lineplot1").selectAll('path').remove();
         var fire_counts_data = await d3.csv('fire_counts.csv')
         console.log(fire_counts_data);
-        load_lineplot();
+        load_lineplot(fire_counts_data);
       }
 
         
@@ -111,7 +114,7 @@
           if (slideIndex==1){
             load_line_data();
             //reload lineplot on window resize
-            window.addEventListener('resize',load_lineplot);
+            window.addEventListener('resize',load_line_data);
           }
           //delete lineplot on click out of slide 1
           else{
@@ -180,7 +183,8 @@
         }
 
         //show the lineplot
-        function lineplot_display(){
+        function lineplot_display(data){
+          console.log(data);
           var margin = 50;
 
           //get size of svg canvas
@@ -197,15 +201,11 @@
 
           //set x and y scales to w/i the axes containers
 
-          var minYear = d3.min(globalThis.fire_counts_data, d => d.year).getFullYear();
-          var maxYear = d3.max(globalThis.fire_counts_data, d => d.year).getFullYear();
-
-
           var y = d3.scaleLinear()
           .domain([0,20000])
           .range([height-2*margin,0]);
           var x = d3.scaleLinear()
-          .domain([minYear,maxYear])
+          .domain([1992,2015])
           .range([0,width-2*margin]);
 
           //set tooltip variable
@@ -232,16 +232,6 @@
           //.attr('stroke', function(d) {return color(d.state)})
           //.attr("stroke-width",1.5)
           //.attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
-        }
-
-        //show barchart
-        function load_lineplot(){
-          d3.select("#lineplot1").selectAll('g').remove();
-          d3.select("#lineplot1").selectAll(".line").remove();
-          d3.select("#lineplot1").selectAll('path').remove();
-
-
-          lineplot_display();
         }
 
       
