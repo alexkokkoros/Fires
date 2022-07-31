@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded61')</script>
+  <script>console.log('reloaded63')</script>
 
   <!-- Load Fire Data -->
   <!-- body onload="load_data()" -->
@@ -56,13 +56,7 @@
 
     <script>
 
-      //Load Fire Data
-      //async function load_data(){
-      //  var fire_counts_data = await d3.csv('fire_counts.csv');
-      //  console.log(fire_counts_data);
-      //}
-      var fire_counts_data = d3.csv('fire_counts.csv');
-      console.log(fire_counts_data);
+      
 
       //Start Slides at 1
       let slideIndex = 1;
@@ -111,6 +105,7 @@
         //rebuild lineplot on click into slide 1
         if (slideIndex==1){
           load_lineplot();
+
           //reload lineplot on window resize
           window.addEventListener('resize',load_lineplot);
         }
@@ -235,6 +230,12 @@
         d3.select("#lineplot1").selectAll('g').remove();
         d3.select("#lineplot1").selectAll(".line").remove();
         d3.select("#lineplot1").selectAll('path').remove();
+
+        var fire_counts_data = d3.csv('fire_counts.csv')
+        .then(conole.log(fire_counts_data))
+        .then(lineplot_display())
+        .catch(function(){console.log('error loading file');});
+        
         lineplot_display();
       }
 
