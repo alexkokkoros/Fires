@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded49')</script>
+  <script>console.log('reloaded50')</script>
 
   <!-- Load Fire Data -->
   <body onload="load_data()">
@@ -93,7 +93,7 @@
         dots[slideIndex-1].className += " active";
 
         //rebuild bars on click into slide
-        if (n==1){
+        if (slideIndex==1){
           load_barchart();
           //reload barchart on window resize
           window.addEventListener('resize',load_barchart);
