@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded66')</script>
+  <script>console.log('reloaded67')</script>
 
   <!-- Load Fire Data -->
   <body onload="main()" >
@@ -55,6 +55,10 @@
 
     <script>
       async function main(){
+
+        var fire_counts_data = await d3.csv('fire_counts.csv');
+        console.log(fire_counts_data);
+
         //Start Slides at 1
         let slideIndex = 1;
         showSlides(slideIndex);
@@ -228,8 +232,7 @@
           d3.select("#lineplot1").selectAll(".line").remove();
           d3.select("#lineplot1").selectAll('path').remove();
 
-          var fire_counts_data = await d3.csv('fire_counts.csv');
-          console.log(fire_counts_data);
+
           lineplot_display();
         }
 
