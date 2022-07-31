@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded83')</script>
+  <script>console.log('reloaded84')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -196,8 +196,8 @@
           console.log(width)
 
           //group the data to draw one line by group
-          //var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
-          //console.log(state_by_year);
+          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(data);
+          console.log(state_by_year);
 
           //set x and y scales to w/i the axes containers
 
@@ -223,15 +223,15 @@
 
 
           //join lines and data
-          //var lplot = d3.select("#lineplot1")
-          //.selectAll(".line")
-          //.data(state_by_year)
-          //.enter()
-          //.append("path")
-          //.attr('fill','none')
+          var lplot = d3.select("#lineplot1")
+          .selectAll(".line")
+          .data(state_by_year)
+          .enter()
+          .append("path")
+          .attr('fill','none')
           //.attr('stroke', function(d) {return color(d.state)})
-          //.attr("stroke-width",1.5)
-          //.attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
+          .attr("stroke-width",1.5)
+          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
         }
 
       
