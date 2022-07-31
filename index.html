@@ -67,6 +67,15 @@
         if (n < 1) {slideIndex = slides.length}
         for (i = 0; i < slides.length; i++) {
           slides[i].style.display = "none";
+          if (i=1) {
+            var data = [4,8,15];
+            var positionInfo = document.getElementById('barchart1');
+            console.log(positionInfo);
+            var height = positionInfo.height;
+            var width = positionInfo.width;
+            document.getElementById("data").innerHTML = data;
+            d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-10*d;});
+          }
         }
         for (i = 0; i < dots.length; i++) {
           dots[i].className = dots[i].className.replace(" active", "");
@@ -74,16 +83,6 @@
         slides[slideIndex-1].style.display = "block";
         dots[slideIndex-1].className += " active";
       }
-    </script>
-
-    <script>
-      var data = [4,8,15];
-      var positionInfo = document.getElementById('barchart1');
-      console.log(positionInfo)
-      var height = positionInfo.height;
-      var width = positionInfo.width;
-      document.getElementById("data").innerHTML = data;
-      d3.selectAll("rect").data(data).attr("width",25).attr("height",function(d) {return 10*d;}).attr("x", function(d,i) {return 40*i;}).attr("y", function(d) {return height-10*d;});
     </script>
   </body>
 </html>
