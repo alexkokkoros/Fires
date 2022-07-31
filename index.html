@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded76')</script>
+  <script>console.log('reloaded77')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -56,7 +56,9 @@
     <script>
 
       async function load_line_data(){
-        var fire_counts_data = await d3.csv('fire_counts.csv').then(console.log(fire_counts_data)).then(load_lineplot());
+        var fire_counts_data = await d3.csv('fire_counts.csv')
+        console.log(fire_counts_data);
+        load_lineplot();
       }
 
         
@@ -186,8 +188,7 @@
           console.log(positionInfo);
           var height = positionInfo.height;
           var width = positionInfo.width;
-          console.log('is this the right data');
-          console.log(data);
+
 
           //group the data to draw one line by group
           //var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(data);
