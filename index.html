@@ -61,7 +61,7 @@
         d3.select("#lineplot1").selectAll('path').remove();
         var fire_counts_data = await d3.csv('fire_counts.csv')
         console.log(fire_counts_data);
-        load_lineplot(fire_counts_data);
+        lineplot_display(fire_counts_data);
       }
 
         
