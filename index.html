@@ -1,10 +1,10 @@
 <html>
   <!-- Load Libraries -->
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded69')</script>
+  <script>console.log('reloaded71')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -55,8 +55,7 @@
 
     <script>
 
-        var fire_counts_data =  d3.csv('fire_counts.csv');
-        console.log(fire_counts_data);
+        
 
         //Start Slides at 1
         let slideIndex = 1;
@@ -104,7 +103,8 @@
 
           //rebuild lineplot on click into slide 1
           if (slideIndex==1){
-            load_lineplot();
+            var fire_counts_data =  d3.csv('fire_counts.csv').then(console.log(fire_counts_data)).then(load_lineplot(fire_counts_data));
+
 
             //reload lineplot on window resize
             window.addEventListener('resize',load_lineplot);
@@ -176,7 +176,7 @@
         }
 
         //show the lineplot
-        function lineplot_display(){
+        function lineplot_display(data){
           var margin = 50;
 
           //get size of svg canvas
@@ -185,10 +185,10 @@
           var height = positionInfo.height;
           var width = positionInfo.width;
           console.log('is this the right data');
-          console.log(globalThis.fire_counts_data);
+          console.log(data);
 
           //group the data to draw one line by group
-          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
+          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(data);
           console.log(state_by_year);
 
           //set x and y scales to w/i the axes containers
@@ -226,13 +226,13 @@
         }
 
         //show barchart
-        function load_lineplot(){
+        function load_lineplot(data){
           d3.select("#lineplot1").selectAll('g').remove();
           d3.select("#lineplot1").selectAll(".line").remove();
           d3.select("#lineplot1").selectAll('path').remove();
 
 
-          lineplot_display();
+          lineplot_display(data);
         }
 
       
