@@ -4,11 +4,10 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded64')</script>
+  <script>console.log('reloaded65')</script>
 
   <!-- Load Fire Data -->
-  <!-- body onload="load_data()" -->
-  <body>
+  <body onload="main()" >
     <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
@@ -55,190 +54,187 @@
     <div id="tooltip" opacity=0></div>
 
     <script>
+      function main(){
+        //Start Slides at 1
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        // current slide
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+          window.removeEventListener('resize',load_barchart);
+          window.removeEventListener('resize',load_lineplot);
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = slides.length}
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";
+          dots[slideIndex-1].className += " active";
+
+          //rebuild bars on click into slide 2
+          if (slideIndex==2){
+            load_barchart();
+            //reload barchart on window resize
+            window.addEventListener('resize',load_barchart);
+          }
+          //delete bars on click out of slide 2
+          else {
+            d3.select('#barchart1').selectAll('g').remove();
+            d3.select('#barchart1').selectAll('rect').remove();
+          }
+
+
+          //rebuild lineplot on click into slide 1
+          if (slideIndex==1){
+            load_lineplot();
+
+            //reload lineplot on window resize
+            window.addEventListener('resize',load_lineplot);
+          }
+          //delete lineplot on click out of slide 1
+          else{
+            d3.select("#lineplot1").selectAll('g').remove();
+            d3.select("#lineplot1").selectAll(".line").remove();
+            d3.select("#lineplot1").selectAll('path').remove();
+          }
+        }
+
+        //display the barchart
+        function barchart_display(){
+          var data = [5,8,15];
+          var margin = 50;
+
+          //get size of svg canvas
+          var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
+          console.log(positionInfo);
+          var height = positionInfo.height;
+          var width = positionInfo.width;
+
+          //set x and y scales to w/i the axes containers
+          var y = d3.scaleLinear().domain([0,20]).range([height-2*margin,0]);
+          var x = d3.scaleBand().domain(['a','b','c']).range([0,width-2*margin]);
+
+          //set tooltip variable
+          var tooltip = d3.select("#tooltip")
+
+          //show axes
+          d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
+          d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
+
+          //join rects and data
+          var bchart = d3.select("#barchart1")
+          .selectAll("rect")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("width",(width-2*margin)/3)
+          .attr("height",function(d) {return 20;})
+          .attr("x", function(d,i) {return margin+((width-2*margin)/3*i);})
+          .attr("y", function(d) {return (height-margin)-20;});
+
+          //set up transition
+          bchart.transition().duration(3000).delay(1000)
+          .attr("height",function(d) {return y(20-d);})
+          .attr("y", function(d) {return (height-margin)-y(20-d);});
+
+
+          //set up tooltip mouseover
+          bchart.on('mouseover', function(d,i) {
+            tooltip.style('opacity',1)
+            .style('left',(d3.event.pageX)+'px')
+            .style('top',(d3.event.pageY)+'px')
+            .html('Item #'+i+' is '+d);
+          })
+          .on('mouseout',function() {tooltip.style('opacity',0)});
+        }
 
       
 
-      //Start Slides at 1
-      let slideIndex = 1;
-      showSlides(slideIndex);
-
-      // Next/previous controls
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-
-      // current slide
-      function currentSlide(n) {
-        showSlides(slideIndex = n);
-      }
-
-      function showSlides(n) {
-        window.removeEventListener('resize',load_barchart);
-        window.removeEventListener('resize',load_lineplot);
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-
-        //rebuild bars on click into slide 2
-        if (slideIndex==2){
-          load_barchart();
-          //reload barchart on window resize
-          window.addEventListener('resize',load_barchart);
-        }
-        //delete bars on click out of slide 2
-        else {
-          d3.select('#barchart1').selectAll('g').remove();
-          d3.select('#barchart1').selectAll('rect').remove();
+        //show barchart
+        function load_barchart(){
+          d3.select("#barchart1").selectAll('g').remove();
+          d3.select("#barchart1").selectAll("rect").remove();
+          barchart_display();
         }
 
+        //show the lineplot
+        function lineplot_display(){
+          var margin = 50;
 
-        //rebuild lineplot on click into slide 1
-        if (slideIndex==1){
-          load_lineplot();
+          //get size of svg canvas
+          var positionInfo = document.getElementById('lineplot1').getBoundingClientRect();
+          console.log(positionInfo);
+          var height = positionInfo.height;
+          var width = positionInfo.width;
+          console.log('is this the right data');
+          console.log(globalThis.fire_counts_data);
 
-          //reload lineplot on window resize
-          window.addEventListener('resize',load_lineplot);
+          //group the data to draw one line by group
+          var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
+          console.log(state_by_year);
+
+          //set x and y scales to w/i the axes containers
+          var y = d3.scaleLinear()
+          .domain(d3.extent(fire_counts_data,function(d) {return d.count;}))
+          .range([height-2*margin,0]);
+          var x = d3.scaleLinear()
+          .domain(d3.extent(fire_counts_data, function(d) {return d.year;}))
+          .range([0,width-2*margin]);
+
+          //set tooltip variable
+          var tooltip = d3.select("#tooltip")
+
+          //show axes
+          d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
+          d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
+
+          //color palette
+          var res = state_by_year.map(function (d) {return d.state}) //list of state names
+          var color = d3.scaleOrdinal()
+          .domain(res)
+          .range()
+
+
+          //join lines and data
+          var lplot = d3.select("#lineplot1")
+          .selectAll(".line")
+          .data(state_by_year)
+          .enter()
+          .append("path")
+          .attr('fill','none')
+          .attr('stroke', function(d) {return color(d.state)})
+          .attr("stroke-width",1.5)
+          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
         }
-        //delete lineplot on click out of slide 1
-        else{
+
+        //show barchart
+        function load_lineplot(){
           d3.select("#lineplot1").selectAll('g').remove();
           d3.select("#lineplot1").selectAll(".line").remove();
           d3.select("#lineplot1").selectAll('path').remove();
+
+          var fire_counts_data = await d3.csv('fire_counts.csv');
+          console.log(fire_counts_data);
+          lineplot_display();
         }
+
       }
-
-      //display the barchart
-      function barchart_display(){
-        var data = [5,8,15];
-        var margin = 50;
-
-        //get size of svg canvas
-        var positionInfo = document.getElementById('barchart1').getBoundingClientRect();
-        console.log(positionInfo);
-        var height = positionInfo.height;
-        var width = positionInfo.width;
-
-        //set x and y scales to w/i the axes containers
-        var y = d3.scaleLinear().domain([0,20]).range([height-2*margin,0]);
-        var x = d3.scaleBand().domain(['a','b','c']).range([0,width-2*margin]);
-
-        //set tooltip variable
-        var tooltip = d3.select("#tooltip")
-
-        //show axes
-        d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
-        d3.select('#barchart1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
-
-        //join rects and data
-        var bchart = d3.select("#barchart1")
-        .selectAll("rect")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("width",(width-2*margin)/3)
-        .attr("height",function(d) {return 20;})
-        .attr("x", function(d,i) {return margin+((width-2*margin)/3*i);})
-        .attr("y", function(d) {return (height-margin)-20;});
-
-        //set up transition
-        bchart.transition().duration(3000).delay(1000)
-        .attr("height",function(d) {return y(20-d);})
-        .attr("y", function(d) {return (height-margin)-y(20-d);});
-
-
-        //set up tooltip mouseover
-        bchart.on('mouseover', function(d,i) {
-          tooltip.style('opacity',1)
-          .style('left',(d3.event.pageX)+'px')
-          .style('top',(d3.event.pageY)+'px')
-          .html('Item #'+i+' is '+d);
-        })
-        .on('mouseout',function() {tooltip.style('opacity',0)});
-      }
-
-      
-
-      //show barchart
-      function load_barchart(){
-        d3.select("#barchart1").selectAll('g').remove();
-        d3.select("#barchart1").selectAll("rect").remove();
-        barchart_display();
-      }
-
-      //show the lineplot
-      function lineplot_display(){
-        var margin = 50;
-
-        //get size of svg canvas
-        var positionInfo = document.getElementById('lineplot1').getBoundingClientRect();
-        console.log(positionInfo);
-        var height = positionInfo.height;
-        var width = positionInfo.width;
-        console.log('is this the right data');
-        console.log(globalThis.fire_counts_data);
-
-        //group the data to draw one line by group
-        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(globalThis.fire_counts_data);
-        console.log(state_by_year);
-
-        //set x and y scales to w/i the axes containers
-        var y = d3.scaleLinear()
-        .domain(d3.extent(fire_counts_data,function(d) {return d.count;}))
-        .range([height-2*margin,0]);
-        var x = d3.scaleLinear()
-        .domain(d3.extent(fire_counts_data, function(d) {return d.year;}))
-        .range([0,width-2*margin]);
-
-        //set tooltip variable
-        var tooltip = d3.select("#tooltip")
-
-        //show axes
-        d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
-        d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
-
-        //color palette
-        var res = state_by_year.map(function (d) {return d.state}) //list of state names
-        var color = d3.scaleOrdinal()
-        .domain(res)
-        .range()
-
-
-        //join lines and data
-        var lplot = d3.select("#lineplot1")
-        .selectAll(".line")
-        .data(state_by_year)
-        .enter()
-        .append("path")
-        .attr('fill','none')
-        .attr('stroke', function(d) {return color(d.state)})
-        .attr("stroke-width",1.5)
-        .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
-      }
-
-      //show barchart
-      function load_lineplot(){
-        d3.select("#lineplot1").selectAll('g').remove();
-        d3.select("#lineplot1").selectAll(".line").remove();
-        d3.select("#lineplot1").selectAll('path').remove();
-
-        var fire_counts_data = d3.csv('fire_counts.csv')
-        .then(console.log(fire_counts_data))
-        .then(lineplot_display())
-        .catch(function(){console.log('error loading file');});
-        
-        lineplot_display();
-      }
-
+      main();
     </script>
   </body>
 </html>
