@@ -224,7 +224,6 @@
 
           //join lines and data
           var lplot = d3.select("#lineplot1")
-          .selectAll(".line")
           .data(state_by_year)
           .enter()
           .append("path")
