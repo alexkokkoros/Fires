@@ -4,10 +4,10 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded67')</script>
+  <script>console.log('reloaded68')</script>
 
   <!-- Load Fire Data -->
-  <body onload="main()" >
+  <body>
     <!-- Title of Page -->
     <h1>Historical Fires in The United States</h1>
     <p> A Narrative Visualization of Historical Fire Data in the United States </p>      
@@ -54,7 +54,6 @@
     <div id="tooltip" opacity=0></div>
 
     <script>
-      async function main(){
 
         var fire_counts_data = await d3.csv('fire_counts.csv');
         console.log(fire_counts_data);
@@ -236,7 +235,7 @@
           lineplot_display();
         }
 
-      }
+      
 
     </script>
   </body>
