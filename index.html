@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded86')</script>
+  <script>console.log('reloaded87')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -158,10 +158,9 @@
           .attr("y", function(d) {return (height-margin)-20;});
 
           //set up transition
-          //bchart.transition().duration(3000).delay(1000)
-          //.attr("height",function(d) {return y(20-d);})
-          //.attr("y", function(d) {return (height-margin)-y(20-d);});
-
+          bchart.transition().duration(3000).delay(1000)
+          .attr("height",function(d) {return y(20-d);})
+          .attr("y", function(d) {return (height-margin)-y(20-d);});
 
           //set up tooltip mouseover
           bchart.on('mouseover', function(d,i) {
@@ -224,6 +223,7 @@
 
           //join lines and data
           var lplot = d3.select("#lineplot1")
+          .selectAll("path")
           .data(state_by_year)
           .enter()
           .append("path")
@@ -231,7 +231,7 @@
           //.attr('stroke', function(d) {return color(d.state)})
           .attr('stroke','black')
           .attr("stroke-width",1.5)
-          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
+          .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)});
         }
 
       
