@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded52')</script>
+  <script>console.log('reloaded53')</script>
 
   <!-- Load Fire Data -->
   <body onload="load_data()">
@@ -21,7 +21,7 @@
       <!-- Slide 1 -->
       <div class="mySlides fade" >
         <div class="numbertext">1 / 3</div>
-        <img src="fire2.jpeg" style="width:100%;height:70%">
+        <svg id="lineplot1" class="plot" width="100%" height="70%"></svg>
         <div class="text">Caption Text</div>
       </div>
 
@@ -78,6 +78,7 @@
 
       function showSlides(n) {
         window.removeEventListener('resize',load_barchart);
+        window.removeEventListener('resize',load_lineplot);
         let i;
         let slides = document.getElementsByClassName("mySlides");
         let dots = document.getElementsByClassName("dot");
@@ -92,16 +93,30 @@
         slides[slideIndex-1].style.display = "block";
         dots[slideIndex-1].className += " active";
 
-        //rebuild bars on click into slide
+        //rebuild bars on click into slide 2
         if (slideIndex==2){
           load_barchart();
           //reload barchart on window resize
           window.addEventListener('resize',load_barchart);
         }
-        //delete bars on click out of slide 1
+        //delete bars on click out of slide 2
         else {
           d3.select('#barchart1').selectAll('g').remove();
           d3.select('#barchart1').selectAll('rect').remove();
+        }
+
+
+        //rebuild lineplot on click into slide 1
+        if (slideIndex==1){
+          load_lineplot();
+          //reload lineplot on window resize
+          window.addEventListener('resize',load_lineplot);
+        }
+        //delete lineplot on click out of slide 1
+        else{
+          d3.select("#lineplot1").selectAll('g').remove();
+          d3.select("#lineplot1").selectAll(".line").remove();
+          d3.select("#lineplot1").selectAll('path').remove();
         }
       }
 
@@ -163,7 +178,62 @@
         barchart_display();
       }
 
-      
+      //show the lineplot
+      function lineplot_display(){
+        var data = [5,8,15];
+        var margin = 50;
+
+        //get size of svg canvas
+        var positionInfo = document.getElementById('lineplot1').getBoundingClientRect();
+        console.log(positionInfo);
+        var height = positionInfo.height;
+        var width = positionInfo.width;
+
+        //group the data to draw one line by group
+        var state_by_year = d3.nest().key(function(d) {return d.state;}).entries(fire_counts_data);
+        console.log(state_by_year)
+
+        //set x and y scales to w/i the axes containers
+        var y = d3.scaleLinear()
+        .domain(d3.extent(fire_counts_data,function(d) {return d.count;}))
+        .range([height-2*margin,0]);
+        var x = d3.scaleLinear()
+        .domain(d3.extent(fire_counts_data, function(d) {return d.year;}))
+        .range([0,width-2*margin]);
+
+        //set tooltip variable
+        var tooltip = d3.select("#tooltip")
+
+        //show axes
+        d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+margin+')').call(d3.axisLeft(y));
+        d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
+
+        //color palette
+        var res = state_by_year.map(function (d) {return d.state}) //list of state names
+        var color = d3.scaleOrdinal()
+        .domain(res)
+        .range()
+
+
+        //join lines and data
+        var lplot = d3.select("#lineplot1")
+        .selectAll(".line")
+        .data(state_by_year)
+        .enter()
+        .append("path")
+        .attr('fill','none')
+        .attr('stroke', function(d) {return color(d.state)})
+        .attr("stroke-width",1.5)
+        .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
+      }
+
+      //show barchart
+      function load_lineplot(){
+        d3.select("#lineplot1").selectAll('g').remove();
+        d3.select("#lineplot1").selectAll(".line").remove();
+        d3.select("#lineplot1").selectAll('path').remove();
+        lineplot_display();
+      }
 
     </script>
   </body>
