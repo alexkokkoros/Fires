@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded84')</script>
+  <script>console.log('reloaded85')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -229,6 +229,7 @@
           .append("path")
           .attr('fill','none')
           //.attr('stroke', function(d) {return color(d.state)})
+          .attr('stroke',black)
           .attr("stroke-width",1.5)
           .attr('d',function(d){return d3.line().x(function(d) {return x(d.year);}).y(function(d) {return y(+d.count);})(d.values)})
         }
