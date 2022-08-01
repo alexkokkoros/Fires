@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded94')</script>
+  <script>console.log('reloaded95')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -220,7 +220,7 @@
 
           //join lines and data
           var lplot = d3.select("#lineplot1")
-          .selectAll("path")
+          .selectAll(".line")
           .data(state_by_year)
           .enter()
           .append("path")
