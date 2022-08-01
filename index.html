@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded130')</script>
+  <script>console.log('reloaded131')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -151,6 +151,9 @@
           var y = d3.scaleLinear().domain([0,20000]).range([0,height-2*margin]);
           var x = d3.scaleBand().domain(['Arson','Campfire','Children','Debris Burning','Equipment Use','Fireworks','Lightning','Miscellaneous','Missing/Undefined','Powerline','Railroad','Smoking','Structure']).range([0,width-2*margin]);
 
+          //color palette
+          var myColor = d3.scaleOrdinal().domain(['Arson','Campfire','Children','Debris Burning','Equipment Use','Fireworks','Lightning','Miscellaneous','Missing/Undefined','Powerline','Railroad','Smoking','Structure']).range(["gold","blue","green","yellow","black","grey","darkgreen","pink","brown","slateblue","steelblue","orange","darkred"]);
+
           //set tooltip variable
           var tooltip = d3.select("#tooltip")
 
@@ -165,6 +168,7 @@
           .enter()
           .append("rect")
           .attr("width",(width-2*margin)/13)
+          .attr('fill', function(d) {return myColor(d.key)})
           .attr("height",function(d) {return y(d.count);})
           .attr("x", function(d,i) {return margin+((width-2*margin)/13*i);})
           .attr("y", function(d) {return margin+(height-2*margin)-y(d.count);});
