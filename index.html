@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded110')</script>
+  <script>console.log('reloaded111')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -236,7 +236,7 @@
 
           //initialize line with first group of list
           console.log(state_by_year.filter(function(d){return d.key=="AL"}))
-          var line = d3.select("#lineplot1").selectAll(".line").append('g').attr('class','line').datum(state_by_year.filter(function(d){return d.key=="AL"})).enter().append("path").attr('d', d3.line().x(function(d){return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;}))
+          var line = d3.select("#lineplot1").selectAll(".line").append('g').attr('class','line').datum(state_by_year.filter(function(d){return d.key=="AL"})).enter().append("path").attr('d', d3.line().x(function(d){return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values))
           .attr('stroke', function(d) {return myColor(d.key)})
           .attr('stroke-width',2)
           .attr('fill','none');
