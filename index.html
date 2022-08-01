@@ -211,7 +211,7 @@
           d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
           //color palette
-          var color = d3.scale.category10();
+          var color = d3.schemeCategory10();
           //var res = state_by_year.map(function(d) {return d.state}); //list of state names
           //var color = d3.scaleOrdinal().domain(res).range(["blue","red","green","pink","yellow","black","brown","purple","steelblue","darkgreen"]);
 
