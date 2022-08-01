@@ -222,7 +222,7 @@
           .enter()
           .append("path")
           .attr('fill','none')
-          .attr('stroke', function(d) {return myColor(d.state)})
+          .attr('stroke', function(d) {return myColor(d.key)})
           .attr("stroke-width",2)
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
