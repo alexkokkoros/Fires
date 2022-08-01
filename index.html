@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded139')</script>
+  <script>console.log('reloaded140')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -285,6 +285,7 @@
 
           //a function to update the chart
           function update(selectedGroup) {
+            d3.select("circle").remove();
             //create new data with the selection
             var dataFilter = state_by_year.filter(function (d) {return d.key==selectedGroup})
             //give these new data to update line
@@ -293,6 +294,15 @@
             .duration(1000)
             .attr('stroke',function(d){return myColor(selectedGroup)})
             .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
+
+            if(selectedGroup == "TX"){
+              d3.select("#lineplot1").append('circle').attr('r',30)
+              .attr("fill","white")
+              .attr("x",70)
+              .attr("y",70)
+              .append("text")
+              .text("Texas seems to show an increase");
+            }
           }
 
           //when button is changed, run updateChart function
