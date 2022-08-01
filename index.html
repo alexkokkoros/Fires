@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded107')</script>
+  <script>console.log('reloaded108')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -212,18 +212,14 @@
           //color palette
           var myColor = d3.scaleOrdinal().domain(["CA","GA","NC","SC","TX","FL","AL","MS","NY","AZ"]).range(["gold","blue","green","yellow","black","grey","darkgreen","pink","brown","slateblue"]);
 
-          //List of groups
-          var allGroup = d3.map(state_by_year,function(d){return(d)}).keys()
-          console.log(allGroup)
-
           //add options to selection button
           d3.select("#selectButton")
           .selectAll('myOptions')
           .data(state_by_year)
           .enter()
           .append('option')
-          .text(function (d) {return d.key})
-          .attr('value',function (d) {return d.key});
+          .text(function (d) {return d.key;})
+          .attr('value',function (d) {return d.key;});
 
           //join lines and data
           //var lplot = d3.select("#lineplot1")
