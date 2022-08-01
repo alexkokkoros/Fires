@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded95')</script>
+  <script>console.log('reloaded96')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -184,6 +184,13 @@
         //show the lineplot
         function lineplot_display(data){
           console.log(data);
+
+          //set year to time
+          var parseTime = d3.timeParse("%Y");
+          data.forEach(function (d) {
+            d.year = parseTime(d.year);
+          });
+
           var margin = 50;
 
           //get size of svg canvas
@@ -203,8 +210,9 @@
           var y = d3.scaleLinear()
           .domain([0,20000])
           .range([height-2*margin,0]);
-          var x = d3.scaleLinear()
-          .domain([1992,2015])
+          var xExtent = d3.extent(state_by_year, d => d.year);
+          var x = d3.scaleTime()
+          .domain(xExtent)
           .range([0,width-2*margin]);
 
           //set tooltip variable
@@ -221,14 +229,27 @@
           //join lines and data
           var lplot = d3.select("#lineplot1")
           .selectAll(".line")
+          .append("g")
+          .attr("class","line")
           .data(state_by_year)
           .enter()
           .append("path")
           .attr('fill','none')
           .attr('stroke', function(d) {return color(d.state)})
-          .attr("stroke-width",1.5)
+          .attr("stroke-width",2)
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
+          //append circle
+          d3.select("svg")
+          .selectAll("circle")
+          .append("g")
+          .data(state_by_year)
+          .enter()
+          .append("circle")
+          .attr("r",6)
+          .attr("cx", d => margin+x(d.year))
+          .attr("cy", d => y(d.count)+margin)
+          .style("fill", d=> color(d.state));
 
           //set up tooltip mouseover
           lplot.on('mouseover', function(d,i) {
