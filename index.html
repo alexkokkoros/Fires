@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded137')</script>
+  <script>console.log('reloaded13')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -166,7 +166,7 @@
           //join rects and data
           var bchart = d3.select("#barchart1")
           .selectAll("rect")
-          .data(data.filter(function(d) {return d.year == 1992}))
+          .data(data.filter(function(d) {return d.year == 1992}).sort(function(x,y){return d3.descending(x.count,y.count);}))
           .enter()
           .append("rect")
           .attr("width",(width-2*margin)/13)
@@ -178,7 +178,7 @@
 
 
           //set up transition
-          bchart.data(data.filter(function(d) {return d.year == 2015}))
+          bchart.data(data.filter(function(d) {return d.year == 2015}).sort(function(x,y){return d3.descending(x.count,y.count);}))
           .transition().duration(3000).delay(1000)
           .attr("height",function(d) {return y(d.count);})
           .attr("y", function(d) {return margin+(height-2*margin)-y(d.count);});
