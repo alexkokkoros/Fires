@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded96')</script>
+  <script>console.log('reloaded97')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -185,11 +185,7 @@
         function lineplot_display(data){
           console.log(data);
 
-          //set year to time
-          var parseTime = d3.timeParse("%Y");
-          data.forEach(function (d) {
-            d.year = parseTime(d.year);
-          });
+
 
           var margin = 50;
 
@@ -210,9 +206,8 @@
           var y = d3.scaleLinear()
           .domain([0,20000])
           .range([height-2*margin,0]);
-          var xExtent = d3.extent(state_by_year, d => d.year);
-          var x = d3.scaleTime()
-          .domain(xExtent)
+          var x = d3.scaleLinear()
+          .domain([1992,2015])
           .range([0,width-2*margin]);
 
           //set tooltip variable
