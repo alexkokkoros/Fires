@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded129')</script>
+  <script>console.log('reloaded130')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -148,7 +148,7 @@
           var width = positionInfo.width;
 
           //set x and y scales to w/i the axes containers
-          var y = d3.scaleLinear().domain([0,20000]).range([height-2*margin,0]);
+          var y = d3.scaleLinear().domain([0,20000]).range([0,height-2*margin]);
           var x = d3.scaleBand().domain(['Arson','Campfire','Children','Debris Burning','Equipment Use','Fireworks','Lightning','Miscellaneous','Missing/Undefined','Powerline','Railroad','Smoking','Structure']).range([0,width-2*margin]);
 
           //set tooltip variable
