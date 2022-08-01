@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded126')</script>
+  <script>console.log('reloaded127')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -165,9 +165,9 @@
           .enter()
           .append("rect")
           .attr("width",(width-2*margin)/13)
-          .attr("height",function(d) {return y(d.count);})
+          .attr("height",function(d) {return y(20000)-y(d.count);})
           .attr("x", function(d,i) {return margin+((width-2*margin)/13*i);})
-          .attr("y", function(d) {return (height-margin)-y(d.count);});
+          .attr("y", function(d) {return (height-margin)-y(20000)+y(d.count);});
 
 
 
