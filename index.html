@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded91')</script>
+  <script>console.log('reloaded92')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -215,11 +215,10 @@
           d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
           //color palette
-          var res = state_by_year.map(function (d) {return d.state}) //list of state names
+          var category = ["AL","MS","GA","NY","FL","SC","CA","TX","AZ","NC"] //list of state names
           var color = d3.scaleOrdinal()
-          .domain(res)
+          .domain(category)
           .range(["#808080","#065535","#ffc0cb","#ffa500","#008080","#40e0d0","#800000","#800080","#333333","#66cdaa"])
-
 
           //join lines and data
           var lplot = d3.select("#lineplot1")
