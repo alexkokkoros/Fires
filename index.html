@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded133')</script>
+  <script>console.log('reloaded134')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -178,17 +178,22 @@
 
 
           //set up transition
-          bchart.transition().duration(3000).delay(1000)
-          .data(data.filter(function(d) {return d.year == 2015}))
-          .attr("height",function(d) {return y(20-d);})
-          .attr("y", function(d) {return (height-margin)-y(20-d);});
+          bchart.data(data.filter(function(d) {return d.year == 2015}))
+          .transition().duration(3000).delay(1000)
+          .attr("height",function(d) {return y(d.count);})
+          .attr("y", function(d) {return margin+(height-2*margin)-y(d.count);});
+
+
+
+
+
 
           //set up tooltip mouseover
           bchart.on('mouseover', function(d,i) {
             tooltip.style('opacity',1)
             .style('left',(d3.event.pageX)+'px')
             .style('top',(d3.event.pageY)+'px')
-            .html('Item #'+i+' is '+d);
+            .html('Cause '+d.cause+' caused '+d.count+' fires in '+d.year);
           })
           .on('mouseout',function() {tooltip.style('opacity',0)});
         }
