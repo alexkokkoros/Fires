@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded98')</script>
+  <script>console.log('reloaded99')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -235,7 +235,7 @@
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
           //append circle
-          d3.select("svg")
+          d3.select("#lineplot1")
           .selectAll("circle")
           .append("g")
           .data(state_by_year)
