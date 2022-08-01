@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded108')</script>
+  <script>console.log('reloaded109')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -19,8 +19,8 @@
 
       <!-- Slide 1 -->
       <div class="mySlides fade">
-        <svg id="lineplot1" class="plot" width="100%" height="70%"></svg>
         <select id="selectButton" class="select"></select>
+        <svg id="lineplot1" class="plot" width="100%" height="70%"></svg>
         <div class="text">Caption Text</div>
       </div>
 
@@ -235,7 +235,26 @@
           //.attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
           //initialize line with first group of list
-          //val line = d3.select("#lineplot1").append('g').append('path').datum(state_by_year.filter(function(d){return d.key==}))
+          var line = d3.select("#lineplot1").append('g').append('path').datum(state_by_year.filter(function(d){return d.key=="AL"})).attr('d', d3.line().x(function(d){return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;}))
+          .attr('stroke', function(d) {return myColor(d.key)})
+          .attr('stroke-width',2)
+          .attr('fill','none');
+
+          //a function to update the chart
+          function update(selectedGroup) {
+            //create new data with the selection
+            var dataFilter = state_by_year.filter(function (d) {return d.key==selectedGroup})
+
+            //give these new data to update line
+            line.datum(dataFilter).transition().duration(1000).attr('d',d3.line().x(function(d){return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})).attr('stroke',function(d){return myColor(selectedGroup)})
+          }
+          //when button is changed, run updateChart function
+          d3.select("#selectButton").on('change',function(d){
+            //recover the option that has been chosen
+            var selectedOption = d3.select(this).property('value');
+            //run teh updateChart function
+            update(selectedOption)
+          })
 
           //set up tooltip mouseover
           //lplot.on('mouseover', function(d,i) {
