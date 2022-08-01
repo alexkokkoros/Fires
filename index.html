@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded136')</script>
+  <script>console.log('reloaded137')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -224,25 +224,6 @@
         //show the lineplot
         function lineplot_display(data){
           console.log(data);
-
-
-          //features of the annotation
-          const annotations = [
-            {
-              note:{
-                label: "Texas seems to be the only state with a noticeable increase in recent years.",
-                title: "Explore the Different States",
-                align: "middle",
-                wrap: 200,
-                padding: 10
-              },
-              x: 150,
-              y:150
-            }
-          ]
-
-          const makeAnnotations = d3.annotation().annotations(annotations)
-          d3.select("#lineplot1").append("g").call(makeAnnotations);
 
           var margin = 50;
 
