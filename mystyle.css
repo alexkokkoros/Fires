@@ -60,6 +60,15 @@
   top: 0;
 }
 
+
+.select {
+  color: #fbc4c4;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 10;
+}
+
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
