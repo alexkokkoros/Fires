@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded105')</script>
+  <script>console.log('reloaded106')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -212,37 +212,42 @@
           //color palette
           var myColor = d3.scaleOrdinal().domain(["CA","GA","NC","SC","TX","FL","AL","MS","NY","AZ"]).range(["gold","blue","green","yellow","black","grey","darkgreen","pink","brown","slateblue"]);
 
+          //List of groups
+          var allGroup = d3.map(state_by_year,function(d){return(d)}).keys()
+
           //add options to selection button
           d3.select("#selectButton")
           .selectAll('myOptions')
-          .data(state_by_year)
+          .data(allGroup)
           .enter()
           .append('option')
-          .text(function (d) {return d.key})
-          .attr('value',function (d) {return d.key;});
+          .text(function (d) {return d})
+          .attr('value',function (d) {return d;});
 
           //join lines and data
-          var lplot = d3.select("#lineplot1")
-          .selectAll(".line")
-          .append("g")
-          .attr("class","line")
-          .data(state_by_year)
-          .enter()
-          .append("path")
-          .attr('fill','none')
-          .attr('stroke', function(d) {return myColor(d.key)})
-          .attr("stroke-width",2)
-          .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
+          //var lplot = d3.select("#lineplot1")
+          //.selectAll(".line")
+          //.append("g")
+          //.attr("class","line")
+          //.data(state_by_year)
+          //.enter()
+          //.append("path")
+          //.attr('fill','none')
+          //.attr('stroke', function(d) {return myColor(d.key)})
+          //.attr("stroke-width",2)
+          //.attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
+          //initialize line with first group of list
+          //val line = d3.select("#lineplot1").append('g').append('path').datum(state_by_year.filter(function(d){return d.key==}))
 
           //set up tooltip mouseover
-          lplot.on('mouseover', function(d,i) {
-          tooltip.style('opacity',1)
-          .style('left',(d3.event.pageX)+'px')
-          .style('top',(d3.event.pageY)+'px')
-          .html('State '+d.state+' had '+d.count + ' fires in '+d.year);
-          })
-          .on('mouseout',function() {tooltip.style('opacity',0)});
+          //lplot.on('mouseover', function(d,i) {
+          //tooltip.style('opacity',1)
+          //.style('left',(d3.event.pageX)+'px')
+          //.style('top',(d3.event.pageY)+'px')
+          //.html('State '+d.state+' had '+d.count + ' fires in '+d.year);
+          //})
+          //.on('mouseout',function() {tooltip.style('opacity',0)});
         }
 
     </script>
