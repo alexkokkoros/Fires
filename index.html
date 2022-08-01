@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded101')</script>
+  <script>console.log('reloaded102')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -211,9 +211,7 @@
           d3.select('#lineplot1').append('g').attr('transform','translate('+margin+','+(height-margin)+')').call(d3.axisBottom(x));
 
           //color palette
-          var color = d3.schemeCategory10();
-          //var res = state_by_year.map(function(d) {return d.state}); //list of state names
-          //var color = d3.scaleOrdinal().domain(res).range(["blue","red","green","pink","yellow","black","brown","purple","steelblue","darkgreen"]);
+          var myColor = d3.scaleOrdinal().domain(["CA","GA","NC","SC","TX","FL","AL","MS","NY","AZ"]).range(["gold","blue","green","yellow","black","grey","darkgreen","pink","brown","slateblue"]);
 
           //join lines and data
           var lplot = d3.select("#lineplot1")
@@ -228,17 +226,6 @@
           .attr("stroke-width",2)
           .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
 
-          //append circle
-          d3.select("#lineplot1")
-          .selectAll("circle")
-          .append("g")
-          .data(state_by_year)
-          .enter()
-          .append("circle")
-          .attr("r",6)
-          .attr("cx", function(d) {return margin+x(d.year);})
-          .attr("cy", function(d) {return y(d.count)+margin;})
-          .style("fill", d=> color(d.state));
 
           //set up tooltip mouseover
           lplot.on('mouseover', function(d,i) {
