@@ -4,7 +4,7 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css"></link>
 
   <!-- Build Tracker -->
-  <script>console.log('reloaded112')</script>
+  <script>console.log('reloaded113')</script>
 
   <!-- Load Fire Data -->
   <body>
@@ -254,10 +254,14 @@
           function update(selectedGroup) {
             //create new data with the selection
             var dataFilter = state_by_year.filter(function (d) {return d.key==selectedGroup})
-
             //give these new data to update line
-            line.datum(dataFilter).transition().duration(1000).attr('d',d3.line().x(function(d){return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})).attr('stroke',function(d){return myColor(selectedGroup)})
+            line.data(dataFilter)
+            .transition()
+            .duration(1000)
+            .attr('stroke',function(d){return myColor(selectedGroup)})
+            .attr('d',function(d){return d3.line().x(function(d) {return margin+x(d.year);}).y(function(d) {return y(d.count)+margin;})(d.values)});
           }
+
           //when button is changed, run updateChart function
           d3.select("#selectButton").on('change',function(d){
             //recover the option that has been chosen
